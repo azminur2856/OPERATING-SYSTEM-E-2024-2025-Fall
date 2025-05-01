@@ -1,0 +1,60 @@
+add() {
+    result=$(echo "$1 + $2" | bc)
+    echo "Addition: $result"
+}
+
+subtract() {
+    result=$(echo "$1 - $2" | bc)
+    echo "Subtraction: $result"
+}
+
+multiply() {
+    result=$(echo "$1 * $2" | bc)
+    echo "Multiplication: $result"
+}
+
+divide() {
+    if (( $(echo "$2 == 0" | bc -l) )); then
+        echo "Division by zero is not allowed."
+    else
+        result=$(echo "scale=2; $1 / $2" | bc)
+        echo "Division: $result"
+    fi
+}
+
+# Menu-driven demonstration
+echo "Choose an operation to demonstrate:"
+echo "1. Fibonacci Series"
+echo "2. Find Maximum of Three Numbers"
+echo "3. Check Prime Number"
+echo "4. Calculator (Add, Subtract, Multiply, Divide)"
+read -p "Enter your choice: " choice
+
+case $choice in
+    1)
+        read -p "Enter the number of terms: " n
+        fibonacci $n
+        ;;
+    2)
+        read -p "Enter first number: " a
+        read -p "Enter second number: " b
+        read -p "Enter third number: " c
+        max_of_three $a $b $c
+        ;;
+    3)
+        read -p "Enter a number: " n
+        is_prime $n
+        ;;
+    4)
+        read -p "Enter first number: " x
+        read -p "Enter second number: " y
+        add $x $y
+        subtract $x $y
+        multiply $x $y
+        divide $x $y
+        ;;
+    *)
+        echo "Invalid choice."
+        ;;
+esac
+
